@@ -8,14 +8,17 @@ import { BiDetail } from "react-icons/bi";
 import { IoIosContacts } from "react-icons/io";
 
 import { NavLink, Outlet } from "react-router-dom";
+import Footer from "../Footer";
+
 
 const MainLayOut = () => {
   return (
+    <div className="bg-lime-200 w-[90%] mx-auto">
     <div className="drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar sticky top-0  z-10 bg-lime-200 w-[90%] mx-auto">
+        <div className="navbar sticky top-0  z-10 bg-lime-400 ">
           <div className="flex-none  lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -127,6 +130,10 @@ const MainLayOut = () => {
           </div>
         </div>
         <Outlet />
+        <div className="bg-lime-200 w-full h-[30vh] mx-auto">
+        <Footer />
+        </div>
+       
       </div>
       <div className="drawer-side">
         <label
@@ -231,6 +238,8 @@ const MainLayOut = () => {
           </NavLink>
         </ul>
       </div>
+    
+    </div>
     </div>
   );
 };
