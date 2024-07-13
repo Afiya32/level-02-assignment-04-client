@@ -1,7 +1,9 @@
+import MainLayOut from "./Components/layout/MainLayOut";
+
 function App() {
   return (
     <>
-      <h1 className="text-red-500">testing project</h1>
+      <MainLayOut />
     </>
   );
 }
