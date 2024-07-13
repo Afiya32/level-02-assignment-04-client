@@ -1,8 +1,10 @@
 import Marquee from "react-fast-marquee";
 import logo from "../../assets/logo/kth.logo.png";
 import { NavLink, Outlet } from "react-router-dom";
-import { FaCartShopping } from "react-icons/fa6";
+import { FaCartShopping, FaClipboardList } from "react-icons/fa6";
 import { IoIosHome } from "react-icons/io";
+import { MdOutlineManageSearch } from "react-icons/md";
+import { IoBagCheckOutline } from "react-icons/io5";
 const DashBoardLayOut = () => {
   return (
     <div className="max-w-[1200x] mt-2 mx-auto">
@@ -19,7 +21,7 @@ const DashBoardLayOut = () => {
         <Marquee>
           <h1>
             Congrats! <span className="text-red-400"></span> for log in .welcome
-            to DashBoard{" "}
+            to DashBoard
           </h1>
           {/* {user.displayName} */}
         </Marquee>
@@ -71,6 +73,7 @@ const DashBoardLayOut = () => {
               }
             >
               <div className="flex justify-center items-center gap-1 mt-2">
+              <FaClipboardList />
                 <h1> Products-list</h1>
               </div>
             </NavLink>
@@ -81,6 +84,7 @@ const DashBoardLayOut = () => {
               }
             >
               <div className="flex justify-center items-center gap-1 mt-2">
+              <MdOutlineManageSearch />
                 <h1>Manage-products</h1>
               </div>
             </NavLink>
@@ -92,6 +96,7 @@ const DashBoardLayOut = () => {
               }
             >
               <div className="flex justify-center items-center gap-1 mt-2">
+              <IoBagCheckOutline />
                 <h1>Checkout</h1>
               </div>
             </NavLink>
