@@ -1,8 +1,13 @@
+import Banner from "../Components/Banner";
+import KeyboardAds from "../Components/ui/Adds";
 
 const HomePage = () => {
   return (
     <div>
-      <h1 > This is  Home  page </h1>
+      <div className="w-[90%] h-[60vh] mx-auto">
+        <KeyboardAds/>
+        <Banner />
+      </div>
     </div>
   );
 };

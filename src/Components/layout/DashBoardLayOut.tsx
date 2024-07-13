@@ -8,7 +8,7 @@ import { IoBagCheckOutline } from "react-icons/io5";
 const DashBoardLayOut = () => {
   return (
     <div className="max-w-[1200x] mt-2 mx-auto">
-      <div className="mx-auto h-24 max-w-[1200px] bg-slate-300 flex justify-center items-center">
+      <div className="mx-auto h-24 max-w-[1200px] bg-lime-200 flex justify-center items-center">
         <div className=" flex justify-center items-center">
           <div className="w-12 h-12">
             <img src={logo} alt="" />
@@ -27,7 +27,7 @@ const DashBoardLayOut = () => {
         </Marquee>
       </div>
       <div className="max-w-[1200px] gap-2 mx-auto mt-2 flex h-screen">
-        <div className="flex-[1] bg-slate-500">
+        <div className="flex-[1] bg-lime-400">
           <ul className=" text-center mt-5 grid grid-cols-1 justify-center items-center gap-12 menu-horizontal">
             {/* Navbar menu content here */}
             <NavLink
@@ -102,7 +102,7 @@ const DashBoardLayOut = () => {
             </NavLink>
           </ul>
         </div>
-        <div className="flex-[3] bg-slate-400 ">
+        <div className="flex-[3] bg-lime-100 ">
           <Outlet />
         </div>
       </div>

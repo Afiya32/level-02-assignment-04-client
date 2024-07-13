@@ -15,12 +15,12 @@ const MainLayOut = () => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar bg-base-300 w-full">
-          <div className="flex-none lg:hidden">
+        <div className="navbar sticky top-0  z-10 bg-lime-200 w-[90%] mx-auto">
+          <div className="flex-none  lg:hidden">
             <label
               htmlFor="my-drawer-3"
               aria-label="open sidebar"
-              className="btn btn-square btn-ghost"
+              className="btn btn-square btn-ghost sticky top-0  z-10"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +134,7 @@ const MainLayOut = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 min-h-full w-80 p-4">
+        <ul className="menu bg-lime-400 min-h-full w-80 p-4">
           <div className="flex justify-center items-center gap-2">
             <img src={logo} className="w-16 h-16" alt="" />
             <h1 className="font-semibold text-2xl">KeyTechHub</h1>
@@ -193,7 +193,6 @@ const MainLayOut = () => {
             }
             to="/contact"
           >
-            
             <div className="flex justify-center items-center gap-1 mt-2">
               <IoIosContacts />
               <h1>Contact</h1>
@@ -224,7 +223,6 @@ const MainLayOut = () => {
             }
             to="/dashboard"
           >
-          
             <div className="flex justify-center items-center gap-1 mt-2">
               <MdDashboardCustomize />
 

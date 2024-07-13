@@ -8,6 +8,9 @@ import Product from "../Pages/Product";
 import SignUp from "../Pages/SignUp";
 import SignIn from "../Pages/SignIn";
 import Carts from "../Pages/Carts";
+import CheckOut from "../Pages/CheckOut";
+import ProductManagement from "../Pages/ProductManagement";
+import ProductList from "../Pages/ProductList";
 
 const router = createBrowserRouter([
   {
@@ -26,9 +29,9 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashBoardLayOut/>,
     children: [{ index: true, element: <Carts /> },
-               { path:"checkout",element:<Carts />},
-               {path:"manageproduct",element:<Carts/>},
-               {path:"productslist",element:<Carts/>}
+               { path:"checkout",element:<CheckOut />},
+               {path:"manageproduct",element:<ProductManagement/>},
+               {path:"productslist",element:<ProductList/>}
     ],
   },
 ]);
