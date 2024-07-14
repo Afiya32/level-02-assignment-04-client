@@ -1,3 +1,5 @@
+import { IProduct } from "../Redux/Features/types";
+
 export const fetchData = async <T>(url: string): Promise<T> => {
     const response = await fetch(url);
     if (!response.ok) {
@@ -5,7 +7,13 @@ export const fetchData = async <T>(url: string): Promise<T> => {
     }
     return response.json();
   };
-  
+  export const fetchProductById = async (productId: string): Promise<IProduct> => {
+    const response = await fetch(`https://server-ten-zeta.vercel.app/api/products/${productId}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  };
   export const postData = async <T>(url: string, data: T): Promise<T> => {
     const response = await fetch(url, {
       method: 'POST',
