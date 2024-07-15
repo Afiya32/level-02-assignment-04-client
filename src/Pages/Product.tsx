@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ProductsCards from "../Components/ProductsCards";
-import { useProducts } from "../utils/useProducts";
+import { useProducts } from "../Hooks/useProduct";
+
 const Product: React.FC = () => {
   const { data, isLoading, error } = useProducts();
   const [searchTerm, setSearchTerm] = useState("");

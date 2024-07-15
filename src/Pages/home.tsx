@@ -5,7 +5,8 @@ import CustomerReviews from "../Components/Coustomer";
 import ExtraPart from "../Components/ExtraPart";
 import ProductsGrid from "../Components/ProductsGrid";
 import KeyboardAds from "../Components/ui/Adds";
-import { useProducts } from "../utils/useProducts";
+import { useProducts } from "../Hooks/useProduct";
+
 
 const HomePage: React.FC = () => {
   const { data, isLoading, error } = useProducts();

@@ -5,7 +5,9 @@ import { FaCartShopping, FaClipboardList } from "react-icons/fa6";
 import { IoIosHome } from "react-icons/io";
 import { MdOutlineManageSearch } from "react-icons/md";
 import { IoBagCheckOutline } from "react-icons/io5";
+import { useAuth } from "../../utils/useAuth";
 const DashBoardLayOut = () => {
+  const { user} = useAuth();
   return (
     <div className="max-w-[1200x] mt-2 mx-auto">
       <div className="mx-auto h-24 max-w-[1200px] bg-lime-200 flex justify-center items-center">
@@ -13,14 +15,14 @@ const DashBoardLayOut = () => {
           <div className="w-12 h-12">
             <img src={logo} alt="" />
           </div>
-          <h1>welcome to DashBoard</h1>
-          {/* {user.displayName} */}
+          <h1>welcome {user?.data.name} to DashBoard</h1>
+         
         </div>
       </div>
       <div className="max-w-[1220px] mx-auto">
         <Marquee>
           <h1>
-            Congrats! <span className="text-red-400"></span> for log in .welcome
+            Congrats! <span className="text-red-400">{user?.data.name}</span> for log in .welcome
             to DashBoard
           </h1>
           {/* {user.displayName} */}

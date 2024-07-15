@@ -14,7 +14,7 @@ import { useAuth } from "../../utils/useAuth";
 
 const MainLayout = () => {
   const { user, logout } = useAuth();
-  console.log(user?.data?.name)
+  
 
   return (
     <div className="bg-lime-200 w-[90%] mx-auto">
