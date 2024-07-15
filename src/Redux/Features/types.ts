@@ -9,5 +9,33 @@ export interface IProduct {
     description: string;
     image: string;
   }
+  export interface UserData {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    image: string;
+    // any other properties
+  }
   
+  export interface UserResponse {
+    data: UserData;
+    // any other properties
+  }
+  
+  export interface SignUpData {
+    _id?: string;
+    name: string;
+    email: string;
+    password: string;
+    phone: number;
+    address?: string;
+    image?: string;
+  }
+  
+  export interface LoginData {
+    email: string;
+    password: string;
+  }
   

@@ -5,13 +5,15 @@ import HomePage from "../Pages/home";
 import About from "../Pages/About";
 import Contact from "../Pages/Contact";
 import Product from "../Pages/Product";
-import SignUp from "../Pages/SignUp";
 import SignIn from "../Pages/SignIn";
 import Carts from "../Pages/Carts";
 import CheckOut from "../Pages/CheckOut";
 import ProductManagement from "../Pages/ProductManagement";
 import ProductList from "../Pages/ProductList";
 import ProductDetails from "../Components/SingleCard";
+import SignUp from "../Pages/SignUp";
+
+
 
 const router = createBrowserRouter([
   {
@@ -25,8 +27,8 @@ const router = createBrowserRouter([
       { path: "products/:productId",element:<ProductDetails/>}
     ],
   },
-  { path: "/signup", element: <SignUp /> },
-  { path: "/signin", element: <SignIn /> },
+  { path: "/signup", element:<SignUp/> },
+  { path: "/login", element: <SignIn /> },
   {
     path: "/dashboard",
     element: <DashBoardLayOut/>,
