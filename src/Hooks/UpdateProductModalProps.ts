@@ -1,3 +1,4 @@
+
 import { IProduct } from "../Redux/Features/types";
 
 export interface UpdateProductModalProps {

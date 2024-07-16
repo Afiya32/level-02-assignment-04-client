@@ -1,3 +1,4 @@
+// src/main
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -11,9 +12,11 @@ import { store } from "./Redux/Features/store.ts";
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={store}>
+   <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <RouterProvider router={router}>
+          {/* Your App Component or Router Configuration */}
+        </RouterProvider>
       </QueryClientProvider>
     </Provider>
   </React.StrictMode>

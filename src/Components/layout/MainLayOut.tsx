@@ -1,3 +1,5 @@
+// src/components/layout/MainLayout.tsx
+import React, { useState, useEffect } from "react";
 import logo from "../../assets/logo/kth.logo.png";
 import person from "../../assets/logo/person-removebg-preview.png";
 import { IoIosHome, IoIosContacts } from "react-icons/io";
@@ -11,10 +13,35 @@ import { CiLogout } from "react-icons/ci";
 import { NavLink, Outlet } from "react-router-dom";
 import Footer from "../Footer";
 import { useAuth } from "../../utils/useAuth";
+import { fetchCartItemsByUser } from "../../api/cartapi";
+import { ICartItem } from "../../Redux/Features/types";
+import Loading from "../Loading";
 
-const MainLayout = () => {
+const MainLayout: React.FC = () => {
   const { user, logout } = useAuth();
-  
+  const email = user?.email || ''; // Adjusted to directly access email if available
+
+  const [cartItems, setCartItems] = useState<ICartItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        if (email) {
+          const data = await fetchCartItemsByUser(email);
+          setCartItems(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch cart items:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCartItems();
+  }, [email]);
+
+  if (isLoading) return <Loading/>;
 
   return (
     <div className="bg-lime-200 w-[90%] mx-auto">
@@ -46,18 +73,19 @@ const MainLayout = () => {
             </div>
             <div className="mx-2 flex-1 px-2">
               <div className="  flex justify-center items-center gap-2">
-                <div className="w-10 h-10"><img src={logo}  alt="KeyTechHub Logo" /></div>
+                <div className="w-10 h-10">
+                  <img src={logo} alt="KeyTechHub Logo" />
+                </div>
                 <h1 className="font-semibold text-2xl">KeyTechHub</h1>
               </div>
             </div>
             <div className="hidden flex-none lg:block">
               <ul className="menu menu-horizontal p-4">
-                {/* Navbar menu content here */}
                 <summary className="btn">
                   <div className="avatar">
                     <div className="w-10 rounded-full">
-                      {user?.data?.email ? (
-                        <img src={user.data?.image || person} alt="User Avatar" />
+                      {user?.image ? (
+                        <img src={user.image || person} alt="User Avatar" />
                       ) : (
                         <img src={person} alt="Default Avatar" />
                       )}
@@ -66,10 +94,8 @@ const MainLayout = () => {
                 </summary>
                 <NavLink
                   to="/"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
+                  className={({ isActive }) =>
+                    isActive
                       ? "p-2 text-red-800 underline font-bold"
                       : "font-bold p-2"
                   }
@@ -78,10 +104,8 @@ const MainLayout = () => {
                 </NavLink>
                 <NavLink
                   to="/products"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
+                  className={({ isActive }) =>
+                    isActive
                       ? "p-2 text-red-800 underline font-bold"
                       : "font-bold p-2"
                   }
@@ -90,10 +114,8 @@ const MainLayout = () => {
                 </NavLink>
                 <NavLink
                   to="/contact"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
+                  className={({ isActive }) =>
+                    isActive
                       ? "p-2 text-red-800 underline font-bold"
                       : "font-bold p-2"
                   }
@@ -102,24 +124,20 @@ const MainLayout = () => {
                 </NavLink>
                 <NavLink
                   to="/about"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
+                  className={({ isActive }) =>
+                    isActive
                       ? "p-2 text-red-800 underline font-bold"
                       : "font-bold p-2"
                   }
                 >
                   About
                 </NavLink>
-                {user?.data?.email ? (
+                {user?.email ? (
                   <>
                     <NavLink
                       to="/dashboard"
-                      className={({ isActive, isPending }) =>
-                        isPending
-                          ? "pending"
-                          : isActive
+                      className={({ isActive }) =>
+                        isActive
                           ? "p-2 text-red-800 underline font-bold"
                           : "font-bold p-2"
                       }
@@ -139,10 +157,8 @@ const MainLayout = () => {
                 ) : (
                   <NavLink
                     to="/signup"
-                    className={({ isActive, isPending }) =>
-                      isPending
-                        ? "pending"
-                        : isActive
+                    className={({ isActive }) =>
+                      isActive
                         ? "p-2 text-red-800 underline font-bold"
                         : "font-bold p-2"
                     }
@@ -156,7 +172,13 @@ const MainLayout = () => {
                       <span className="text-xl">
                         <FaShoppingCart />
                       </span>
-                      <div className="badge absolute left-7">+99</div>
+                      <div className="badge absolute left-7">
+                        {cartItems && cartItems.length > 0 && (
+                          <div className="badge absolute left-7">
+                            {cartItems.length}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </NavLink>
@@ -179,7 +201,6 @@ const MainLayout = () => {
               <img src={logo} alt="KeyTechHub Logo" />
               <h1 className="font-semibold text-2xl">KeyTechHub</h1>
             </div>
-            {/* Sidebar content here */}
             <NavLink
               to="/dashboard/carts"
               className="mt-5 flex justify-center items-center gap-1"
@@ -189,15 +210,24 @@ const MainLayout = () => {
                   <span className="text-xl">
                     <FaShoppingCart />
                   </span>
-                  <div className="badge absolute left-7">+99</div>
+                  <div className="badge absolute left-7">
+                    {cartItems && cartItems.length > 0 && (
+                      <div className="badge absolute left-7">
+                        {cartItems.length}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </NavLink>
             <summary className="btn">
               <div className="avatar">
                 <div className="w-10 rounded-full">
-                  {user?.data?.email ? (
-                    <img src={user?.data?.image || person} alt="User Avatar" />
+                  {user?.image ? (
+                    <img
+                      src={user?.image || person}
+                      alt="User Avatar"
+                    />
                   ) : (
                     <img src={person} alt="Default Avatar" />
                   )}
@@ -206,10 +236,8 @@ const MainLayout = () => {
             </summary>
             <NavLink
               to="/"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
+              className={({ isActive }) =>
+                isActive
                   ? "p-2 text-red-800 underline font-bold"
                   : "font-bold p-2"
               }
@@ -221,10 +249,8 @@ const MainLayout = () => {
             </NavLink>
             <NavLink
               to="/products"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
+              className={({ isActive }) =>
+                isActive
                   ? "p-2 text-red-800 underline font-bold"
                   : "font-bold p-2"
               }
@@ -236,10 +262,8 @@ const MainLayout = () => {
             </NavLink>
             <NavLink
               to="/contact"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending mt-2"
-                  : isActive
+              className={({ isActive }) =>
+                isActive
                   ? "p-2 text-red-800 underline font-bold"
                   : "font-bold p-2"
               }
@@ -251,34 +275,42 @@ const MainLayout = () => {
             </NavLink>
             <NavLink
               to="/about"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending flex justify-center items-center gap-1"
-                  : isActive
-                  ? "p-2 text-red-800 underline font-bold"
-                  : "font-bold p-2"
-              }
-            >
-              <div className="flex justify-center items-center gap-1 mt-2">
-                <BiDetail />
-                <h1>About</h1>
-              </div>
-            </NavLink>
-            <NavLink
-              to="/dashboard"
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending"
-                  : isActive
+              className={({ isActive }) =>
+                isActive
                   ? "p-2 text-red-800 underline font-bold"
                   : "font-bold p-2"
               }
             >
               <div className="flex justify-center items-center gap-1 mt-2">
                 <MdDashboardCustomize />
-                <h1>Dashboard</h1>
+                <h1>About</h1>
               </div>
             </NavLink>
+            {user?.email ? (
+              <li>
+                <button
+                  onClick={logout}
+                  className="btn btn-outline btn-success p-2"
+                >
+                  <CiLogout className="text-2xl" />
+                  Log Out
+                </button>
+              </li>
+            ) : (
+              <NavLink
+                to="/signup"
+                className={({ isActive }) =>
+                  isActive
+                    ? "p-2 text-red-800 underline font-bold"
+                    : "font-bold p-2"
+                }
+              >
+                <div className="flex justify-center items-center gap-1 mt-2">
+                  <BiDetail />
+                  <h1>Sign Up</h1>
+                </div>
+              </NavLink>
+            )}
           </ul>
         </div>
       </div>

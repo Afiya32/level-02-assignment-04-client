@@ -1,3 +1,4 @@
+// src/app
 import MainLayOut from "./Components/layout/MainLayOut";
 
 function App() {

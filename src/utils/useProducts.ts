@@ -1,4 +1,3 @@
-// src/utils/utilis.ts
 export const fetchData = async <T>(url: string): Promise<T> => {
   const response = await fetch(url);
   if (!response.ok) {
@@ -43,6 +42,8 @@ export const deleteData = async (url: string): Promise<void> => {
     throw new Error('Network response was not ok');
   }
 };
+
+// New function to fetch product by ID
 export const fetchProductById = async <T>(id: string): Promise<T> => {
   const url = `https://server-ten-zeta.vercel.app/api/products/${id}`;
   const response = await fetch(url);

@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { useSignUp } from "../utils/useUserAuth";
-import { SignUpData } from "../Redux/Features/types";
+// src/pages/SignUp.tsx
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSignUp } from '../utils/useUserAuth';
+import { SignUpData } from '../Redux/Features/types';
 
 const SignUp: React.FC = () => {
-  const { mutate: signUp, error } = useSignUp();
+  const { signUp, error } = useSignUp();
   const [formData, setFormData] = useState<SignUpData>({
-    name: "",
-    email: "",
-    password: "",
+    name: '',
+    email: '',
+    password: '',
     phone: 0,
-    address: "",
-    image: "",
+    address: '',
+    image: '',
   });
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -28,18 +29,13 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center mx-auto w-5/6">
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <h5 className="text-xl font-medium text-gray-900 dark:text-white">
-            Create an account
-          </h5>
-          {error && <p className="text-red-500">{error.message}</p>}
+          <h5 className="text-xl font-medium text-gray-900 dark:text-white">Create an account</h5>
+          {error && <p className="text-red-500">{error}</p>}
           <div>
-            <label
-              htmlFor="name"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Your name
             </label>
             <input
@@ -54,10 +50,7 @@ const SignUp: React.FC = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor="phone"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Phone number
             </label>
             <input
@@ -72,10 +65,7 @@ const SignUp: React.FC = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor="address"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Address
             </label>
             <input
@@ -90,10 +80,7 @@ const SignUp: React.FC = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Your email
             </label>
             <input
@@ -108,10 +95,7 @@ const SignUp: React.FC = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Your password
             </label>
             <input
@@ -126,10 +110,7 @@ const SignUp: React.FC = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor="image"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
+            <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Profile Image URL
             </label>
             <input

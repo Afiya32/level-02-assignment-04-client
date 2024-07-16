@@ -1,3 +1,4 @@
+//src/redux/features/store
 import { configureStore } from '@reduxjs/toolkit';
 import productsReducer from './productsSlice';
 

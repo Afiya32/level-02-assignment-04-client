@@ -1,75 +1,67 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { LoginData, SignUpData, UserResponse } from '../Redux/Features/types';
+// src/utils/useUserAuth.ts
+
+import { useState } from 'react';
 import { postData } from './utilis2';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { saveUserToLocalStorage } from './saveUserToLocalStorage';
+import { LoginData, SignUpData } from '../Redux/Features/types';
 
 const SIGNUP_ENDPOINT = 'https://server-ten-zeta.vercel.app/api/users/auth/signup';
 const LOGIN_ENDPOINT = 'https://server-ten-zeta.vercel.app/api/users/auth/login';
 
 export const useSignUp = () => {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
-  return useMutation<UserResponse, Error, SignUpData>({
-    mutationFn: (userData) => postData<UserResponse>(SIGNUP_ENDPOINT, userData),
-    onSuccess: (data) => {
-      console.log('Signup successful:', data);
+    const signUp = async (formData: SignUpData) => {
+        try {
+            const userResponse = await postData(SIGNUP_ENDPOINT, formData);
+            console.log('Signup successful:', userResponse);
 
-      saveUserToLocalStorage(data); // Save user to localStorage
+            saveUserToLocalStorage(userResponse); // Save user to localStorage
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Signup successful',
-        showConfirmButton: false,
-        timer: 1500,
-      });
+            Swal.fire({
+                icon: 'success',
+                title: 'Signup successful',
+                showConfirmButton: false,
+                timer: 1500,
+            });
 
-      navigate('/dashboard');
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-    onError: (error: Error) => {
-      console.error('Signup error:', error);
+            navigate('/dashboard');
+        } catch (error) {
+            console.error('Signup error:', error);
+            setError('Unknown error occurred');
+        }
+    };
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Signup failed',
-        text: error.message,
-      });
-    }
-  });
+    return { signUp, error };
 };
 
 export const useLogin = () => {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
-  return useMutation<UserResponse, Error, LoginData>({
-    mutationFn: (userData) => postData<UserResponse>(LOGIN_ENDPOINT, userData),
-    onSuccess: (data) => {
-      console.log('Login successful:', data);
+    const login = async (formData: LoginData) => {
+        try {
+            const userResponse = await postData(LOGIN_ENDPOINT, formData);
+            console.log('Login successful:', userResponse);
 
-      saveUserToLocalStorage(data); // Save user to localStorage
+            saveUserToLocalStorage(userResponse); // Save user to localStorage
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Login successful',
-        showConfirmButton: false,
-        timer: 1500,
-      });
+            Swal.fire({
+                icon: 'success',
+                title: 'Login successful',
+                showConfirmButton: false,
+                timer: 1500,
+            });
 
-      navigate('/dashboard');
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-    onError: (error: Error) => {
-      console.error('Login error:', error);
+            navigate('/dashboard');
+        } catch (error) {
+            console.error('Login error:', error);
+            setError('Unknown error occurred');
+        }
+    };
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Login failed',
-        text: error.message,
-      });
-    }
-  });
+    return { login, error };
 };

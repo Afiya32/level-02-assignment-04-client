@@ -1,8 +1,8 @@
 
 const CheckOut = () => {
   return (
-    <div>
-      <h1 > This is  CheckOut  page </h1>
+    <div className="flex justify-center items-center">
+      <h1 > under processing.....</h1>
     </div>
   );
 };

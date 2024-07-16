@@ -1,8 +1,7 @@
-// productSlice
+//src/redux/features/productSlice
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IProduct } from './types';
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IProduct } from "./types";
 
 interface ProductsState {
   products: IProduct[];
@@ -17,7 +16,7 @@ const initialState: ProductsState = {
 };
 
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState,
   reducers: {
     setProducts: (state, action: PayloadAction<IProduct[]>) => {

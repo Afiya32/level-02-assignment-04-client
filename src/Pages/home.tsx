@@ -1,3 +1,4 @@
+// src/pages/home
 import { NavLink } from "react-router-dom";
 import Banner from "../Components/Banner";
 import Brands from "../Components/Brands";
@@ -6,14 +7,15 @@ import ExtraPart from "../Components/ExtraPart";
 import ProductsGrid from "../Components/ProductsGrid";
 import KeyboardAds from "../Components/ui/Adds";
 import { useProducts } from "../Hooks/useProduct";
-
+import Loading from "../Components/Loading";
+import ErrorPage from "../Components/Errorpage";
 
 const HomePage: React.FC = () => {
   const { data, isLoading, error } = useProducts();
   const productsToShow = data ? data.slice().reverse().slice(0, 6) : [];
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorPage message={error.message} />;
   return (
     <div>
       <div className="w-[90%] h-[700vh] mx-auto">
@@ -23,7 +25,9 @@ const HomePage: React.FC = () => {
         <CustomerReviews />
         <ProductsGrid products={productsToShow} title="Top Products" />
         <div className="flex justify-center items-center mt-2">
-          <NavLink to='/products'><button className="btn btn-primary">More Products</button></NavLink>
+          <NavLink to="/products">
+            <button className="btn btn-primary">More Products</button>
+          </NavLink>
         </div>
         <ExtraPart />
       </div>

@@ -1,18 +1,13 @@
-// utilis2
-export const postData = async <T>(url: string, data: object): Promise<T> => {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+// src/utils/utilis2.ts
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    console.error("Error response:", errorData);
-    throw new Error(errorData.message || "Network response was not ok");
-  }
+import axios from 'axios';
+import { LoginData, SignUpData, UserResponse } from '../Redux/Features/types';
 
-  return response.json();
+export const postData = async (url: string, data: SignUpData | LoginData): Promise<UserResponse> => {
+    try {
+        const response = await axios.post<UserResponse>(url, data);
+        return response.data; // Assuming axios handles the response correctly
+    } catch (error) {
+        throw new Error('Unknown error occurred');
+    }
 };

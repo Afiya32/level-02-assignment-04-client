@@ -1,3 +1,4 @@
+// src/components/ui/adds
 import  { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import image1 from "../../assets/images/keyboard1.avif";

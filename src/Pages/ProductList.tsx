@@ -1,20 +1,25 @@
+// src/pages/productlist
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { useDeleteProduct, useProducts, useUpdateProduct } from "../Hooks/useProduct";
+import { IProduct } from "../Redux/Features/types";
+import ErrorPage from "../Components/Errorpage";
+import Loading from "../Components/Loading";
 
-const ProductList = () => {
+const ProductList: React.FC = () => {
   const { data: products, isLoading, error } = useProducts();
   const { mutate: deleteProductMutation } = useDeleteProduct();
-  const { mutate:updateProductMutation}= useUpdateProduct();
-  const [formData, setFormData] = useState({
+  const { mutate: updateProductMutation } = useUpdateProduct();
+  const [formData, setFormData] = useState<IProduct>({
+    _id: "",
     name: "",
     image: "",
     price: 0,
     quantity: 0,
     description: "",
+    brand: "", // Ensure all required properties are included
+    rating: 0, // Ensure all required properties are included
   });
-
-  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,7 +31,6 @@ const ProductList = () => {
     updateProductMutation(formData, {
       onSuccess: () => {
         Swal.fire("Success", "Product updated successfully", "success");
-        // Optionally, clear form data or close modal here
       },
       onError: (err) => {
         Swal.fire("Error", `Error updating product: ${err.message}`, "error");
@@ -57,19 +61,14 @@ const ProductList = () => {
     });
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading products</div>;
+  if (isLoading) return <Loading/>;
+  if (error) return <ErrorPage message={error.message}/>;
 
   return (
     <div className="overflow-x-auto">
       <table className="table">
         <thead>
           <tr>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </th>
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
@@ -80,11 +79,6 @@ const ProductList = () => {
           {products?.map((product) => (
             <tr key={product._id}>
               <td>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </td>
-              <td>
                 <div className="flex items-center gap-3">
                   <div className="avatar">
                     <div className="mask mask-squircle h-12 w-12">
@@ -92,39 +86,30 @@ const ProductList = () => {
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold">{product.name}</div>
-                    <div className="text-sm opacity-50">ID: {product._id}</div>
+                    <div className="font-bold">{product.brand}</div>
+                    <div className="text-sm opacity-50">ID: {product.name}</div>
                   </div>
                 </div>
               </td>
               <td>{product.price}</td>
               <td>{product.quantity}</td>
               <td>
-                {/* Update button */}
                 <button
                   className="btn"
                   onClick={() => {
-                    setFormData({
-                      name: product.name,
-                      image: product.image,
-                      price: product.price,
-                      quantity: product.quantity,
-                      description: product.description,
-                    });
-                    document.getElementById("my_modal_3").showModal();
+                    setFormData({ ...product }); // Set form data for update
+                    const modal = document.getElementById("my_modal_3") as HTMLDialogElement | null;
+                    if (modal) modal.showModal();
                   }}
                 >
                   Update
                 </button>
-                {/* Modal */}
                 <dialog id="my_modal_3" className="modal">
                   <div className="modal-box">
                     <form onSubmit={handleSubmit} method="dialog">
-                      {/* Close button */}
                       <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                         ✕
                       </button>
-                      {/* Form inputs */}
                       <div className="form-control">
                         <label className="label">
                           <span className="label-text">Name</span>
@@ -190,7 +175,6 @@ const ProductList = () => {
                           required
                         />
                       </div>
-                      {/* Submit and cancel buttons */}
                       <div className="modal-action">
                         <button type="submit" className="btn btn-primary">
                           Update
@@ -199,8 +183,8 @@ const ProductList = () => {
                           type="button"
                           className="btn"
                           onClick={() => {
-                            document.getElementById("my_modal_3").close();
-                            // Optionally, reset form data here
+                            const modal = document.getElementById("my_modal_3") as HTMLDialogElement | null;
+                            if (modal) modal.close();
                           }}
                         >
                           Cancel
@@ -209,7 +193,6 @@ const ProductList = () => {
                     </form>
                   </div>
                 </dialog>
-                {/* Delete button */}
                 <button
                   className="btn btn-ghost btn-xs"
                   onClick={() => handleDelete(product._id || "")}

@@ -1,3 +1,4 @@
+// src/Hooks/useproduct
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { IProduct } from "../Redux/Features/types";
 import { deleteData, fetchData, postData, updateData } from "../utils/utilis";
@@ -14,26 +15,18 @@ export const useProducts = () => {
 export const useCreateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation<IProduct, Error, IProduct>({
-    mutationFn: (newProduct) =>
-      postData<IProduct>(PRODUCTS_ENDPOINT, newProduct),
+    mutationFn: (newProduct) => postData<IProduct>(PRODUCTS_ENDPOINT, newProduct),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
   });
 };
 
-export const useUpdateProduct = (productId: string) => {
+export const useUpdateProduct = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<IProduct, Error, Partial<IProduct>>({
-    mutationFn: async (updatedProduct) => {
-      try {
-        const updatedProductResponse = await updateData<IProduct>(`${PRODUCTS_ENDPOINT}/${productId}`, updatedProduct);
-        return updatedProductResponse; // Ensure updateData returns the updated product directly
-      } catch (error) {
-        throw new Error(`Failed to update product: ${error}`);
-      }
-    },
+  return useMutation<IProduct, Error, IProduct>({
+    mutationFn: (productData) => updateData<IProduct>(`${PRODUCTS_ENDPOINT}/${productData._id}`, productData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },

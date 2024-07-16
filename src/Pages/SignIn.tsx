@@ -1,3 +1,4 @@
+// src/pages/SignIn.tsx
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -6,7 +7,7 @@ import { LoginData } from '../Redux/Features/types';
 
 const SignIn: React.FC = () => {
   const [error, setError] = useState<string>(''); // Initialize with empty string
-  const { mutate: login } = useLogin();
+  const { login } = useLogin();
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -18,8 +19,8 @@ const SignIn: React.FC = () => {
     };
 
     try {
-      login(userData);
-      navigate('/dashboard')
+      await login(userData);
+      navigate('/dashboard');
     } catch (err) {
       console.error('Login error:', err);
       setError(err instanceof Error ? err.message : 'Login failed');
@@ -34,7 +35,7 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className='flex justify-center items-center w-5/6 h-[100vh] mx-auto'>
       <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">

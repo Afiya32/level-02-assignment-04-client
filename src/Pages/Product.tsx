@@ -1,6 +1,9 @@
+// src/pages/product
 import React, { useState } from "react";
 import ProductsCards from "../Components/ProductsCards";
 import { useProducts } from "../Hooks/useProduct";
+import ErrorPage from "../Components/Errorpage";
+import Loading from "../Components/Loading";
 
 const Product: React.FC = () => {
   const { data, isLoading, error } = useProducts();
@@ -13,8 +16,8 @@ const Product: React.FC = () => {
     setCurrentPage(1);
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (isLoading) return <Loading/>;
+  if (error) return <ErrorPage message={error.message}/>;
 
   const filteredProducts = data?.filter((product) =>
     product.name.toLowerCase().includes(searchTerm) ||

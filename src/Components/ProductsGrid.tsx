@@ -1,3 +1,4 @@
+//src/components/producgrid
 import { IProduct } from "../Redux/Features/types";
 import ProductsCards from "./ProductsCards";
 
