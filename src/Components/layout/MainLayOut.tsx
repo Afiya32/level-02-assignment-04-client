@@ -19,11 +19,11 @@ import Loading from "../Loading";
 
 const MainLayout: React.FC = () => {
   const { user, logout } = useAuth();
-  const email = user?.email || ''; // Adjusted to directly access email if available
+  const email = user?.data?.email || ''; // Adjusted to directly access email if available
 
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+     console.log(user)
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -84,8 +84,8 @@ const MainLayout: React.FC = () => {
                 <summary className="btn">
                   <div className="avatar">
                     <div className="w-10 rounded-full">
-                      {user?.image ? (
-                        <img src={user.image || person} alt="User Avatar" />
+                      {user?.data?.image ? (
+                        <img src={user?.data?.image || person} alt="User Avatar" />
                       ) : (
                         <img src={person} alt="Default Avatar" />
                       )}
@@ -132,7 +132,7 @@ const MainLayout: React.FC = () => {
                 >
                   About
                 </NavLink>
-                {user?.email ? (
+                {user?.data?.email ? (
                   <>
                     <NavLink
                       to="/dashboard"
@@ -166,16 +166,16 @@ const MainLayout: React.FC = () => {
                     Sign Up
                   </NavLink>
                 )}
-                <NavLink to="/dashboard/carts">
+                <NavLink to="/dashboard">
                   <div className="avatar placeholder relative">
                     <div className="bg-neutral text-neutral-content w-10 rounded-full">
                       <span className="text-xl">
                         <FaShoppingCart />
                       </span>
-                      <div className="badge absolute left-7">
+                      <div className=" -top-2 absolute bg-transparent left-7">
                         {cartItems && cartItems.length > 0 && (
-                          <div className="badge absolute left-7">
-                            {cartItems.length}
+                          <div className="-top-2 badge absolute bg-transparent left-7 text-green-400">
+                           + {cartItems.length}
                           </div>
                         )}
                       </div>
@@ -223,9 +223,9 @@ const MainLayout: React.FC = () => {
             <summary className="btn">
               <div className="avatar">
                 <div className="w-10 rounded-full">
-                  {user?.image ? (
+                  {user?.data?.image ? (
                     <img
-                      src={user?.image || person}
+                      src={user?.data?.image || person}
                       alt="User Avatar"
                     />
                   ) : (
@@ -286,7 +286,7 @@ const MainLayout: React.FC = () => {
                 <h1>About</h1>
               </div>
             </NavLink>
-            {user?.email ? (
+            {user?.data?.email ? (
               <li>
                 <button
                   onClick={logout}

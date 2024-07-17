@@ -22,7 +22,7 @@ interface CartItem {
 
 const Carts: React.FC = () => {
   const { user } = useAuth();
-  const email = user?.email || '';
+  const email = user?.data?.email || '';
 
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);

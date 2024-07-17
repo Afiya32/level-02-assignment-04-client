@@ -56,7 +56,7 @@ const ProductDetails: React.FC = () => {
         icon: "success",
         confirmButtonText: "OK",
       }).then(() => {
-        navigate('/dashboard/cart');
+        navigate('/dashboard');
       });
     }
   }, [success, navigate]);
@@ -87,10 +87,10 @@ const ProductDetails: React.FC = () => {
       productId: product._id || '',
       productName: product.name || "",
       price: productPrice,
-      buyerName: user.name || "",
-      buyerEmail: user.email || "",
-      phone: user.phone || 0,
-      address: user.address || "",
+      buyerName: user.data.name || "",
+      buyerEmail: user.data.email || "",
+      phone: user.data.phone || 0,
+      address: user.data.address || "",
       productImage: product.image || "",
       quantity,
       totalPrice: productPrice * quantity,

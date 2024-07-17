@@ -15,7 +15,7 @@ import Loading from "../Loading";
 
 const DashBoardLayOut: React.FC = () => {
   const { user } = useAuth();
-  const email = user?.email || '';
+  const email = user?.data?.email || '';
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -43,13 +43,13 @@ const DashBoardLayOut: React.FC = () => {
           <div className="w-12 h-12">
             <img src={logo} alt="" />
           </div>
-          <h1>welcome {user?.name} to DashBoard</h1> {/* Updated to user?.name */}
+          <h1>welcome {user?.data?.name} to DashBoard</h1> {/* Updated to user?.name */}
         </div>
       </div>
       <div className="max-w-[1220px] mx-auto">
         <Marquee>
           <h1>
-            Congrats! <span className="text-red-400">{user?.name}</span> for logging in. Welcome
+            Congrats! <span className="text-red-400">{user?.data?.name}</span> for logging in. Welcome
             to DashBoard
           </h1>
         </Marquee>
@@ -85,10 +85,10 @@ const DashBoardLayOut: React.FC = () => {
                     <span className="text-xl">
                     <FaCartShopping />
                     </span>
-                    <div className="badge absolute right-9 -top-0 ">
+                    <div className=" bg-transparent absolute right-9 -top-0 ">
                     {cartItems && cartItems.length > 0 && (
-                          <div className="badge absolute left-7">
-                            {cartItems.length}
+                          <div className="badge absolute left-7 text-green-300">
+                           + {cartItems.length}
                           </div>
                         )}
                     </div>

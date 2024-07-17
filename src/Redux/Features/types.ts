@@ -55,18 +55,21 @@ export interface UserData {
   name: string;
   email: string;
   phone: number;
-  address: string;
-  image: string;
-  // any other properties
-}
-
-export interface UserResponse {
-  _id: string;
-  name: string;
-  email: string;
-  phone: number;
   address?: string;
   image?: string;
+  // any other properties
+}
+export interface UserResponse {
+  success: boolean;
+  message: string;
+  data: {
+    _id: string;
+    name: string;
+    email: string;
+    phone: number;
+    address?: string;
+    image?: string;
+  };
 }
 
 export interface SignUpData {

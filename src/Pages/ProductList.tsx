@@ -20,7 +20,7 @@ const ProductList: React.FC = () => {
     brand: "", // Ensure all required properties are included
     rating: 0, // Ensure all required properties are included
   });
-
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

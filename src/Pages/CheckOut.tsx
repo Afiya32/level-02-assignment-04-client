@@ -2,7 +2,9 @@
 const CheckOut = () => {
   return (
     <div className="flex justify-center items-center">
-      <h1 > under processing.....</h1>
+      <div>
+        <h1> under proccesing.....</h1>
+      </div>
     </div>
   );
 };
